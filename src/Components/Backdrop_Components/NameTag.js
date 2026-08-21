@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import { use, useActionState, useContext, useEffect, useRef, useState, useTransition } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
 import { textPathContext } from "../../App";
 

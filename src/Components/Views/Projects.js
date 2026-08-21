@@ -1,9 +1,21 @@
 import gsap from "gsap";
-import { useContext, useEffect, useRef, useState } from "react";
-import { textPathContext } from "../../App";
+import { useEffect, useRef, useState } from "react";
 import { ScrambleTextPlugin } from "gsap/all";
+import CLASS_PROJECT from "./View_Components/CLASS_PROJECT";
 
 gsap.registerPlugin(ScrambleTextPlugin);
+
+const projects = [
+    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
+    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"]}),
+    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
+    new CLASS_PROJECT({description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
+    new CLASS_PROJECT({name: "Old Resume", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
+    new CLASS_PROJECT({name: "Old Resume", link: "https://h4rsh-prog.github.io/"}),
+    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
+    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
+    
+];
 
 export default function Projects() {
     const [startFlag, setStartFlag] = useState(false);
@@ -38,16 +50,31 @@ export default function Projects() {
     },[startFlag]);
     return (
         <div id="project_wrapper" style={{height:"100%", width:"100%", marginTop:"2.7%"}}>
-            <div className="container mx-auto my-auto" id="project_container" style={{backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem"}}>
-                <div className="row mx-auto" style={{width:"100%"}}>
+            <div className="container mx-auto my-auto" id="project_container" style={{position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem"}}>
+                <div className="row mx-auto" style={{width:"100%", position:"absolute"}}>
                     <div className="col my-1">
-                        <p className="display-3 megrim-regular" ref={ref.project_header} style={{textAlign:"end"}}></p>
+                        <p className="display-3 megrim-regular" ref={ref.project_header} style={{textAlign:"end", marginRight:"1rem"}}></p>
                     </div>
                 </div>
-                <div className="row mx-auto" style={{width:"100%"}}>
+                <div className="row mx-auto" style={{width:"100%", position:"absolute", top:"5rem"}}>
                     <div className="col">
-                        <p className="megrim-regular header-description me-3" style={{textAlign:"end", marginTop:"-1rem", }}>This section is under construction</p>
+                        <p className="megrim-regular header-description" style={{textAlign:"end", marginRight:"1.5rem"}}>This section is under construction</p>
                     </div>
+                </div>
+                <div className="row mx-auto" style={{position:"relative", width:"100%", height:"75%", marginTop:"8rem", overflowY:"scroll", overflowX:"hidden", border:"1px solid red"}}>
+                    {projects.map((project, index) => (
+                        <div key={index} className="row-lg col-xl-6 mb-4">
+                            <div className="card h-100">
+                                <div className="card-body">
+                                    {(project.name) ? <h5 className="card-title">{project.name}</h5> : null}
+                                    {(project.description) ? <p className="card-text">{project.description}</p> : null}
+                                    {(project.technologies) ? <p className="card-text">Technologies: {project.technologies.join(", ")}</p> : null}
+                                    {(project.url) ? <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">View Project</a> : null}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    <div className="h-25" style={{backgroundColor:"red", position:"absolute", bottom:"0"}}></div>
                 </div>
             </div>
         </div>
