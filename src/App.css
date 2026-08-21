@@ -1,3 +1,38 @@
+:root{
+  --primary-color: #1F2421;
+  --secondary-color: #216869;
+  --tertiary-color: #49A078;
+  --transitionary-color: #9CC5A1;
+  --accent-color: #DCE1DE;
+}
+
+#project_wrapper > div {
+  border: 1px solid red;
+}
+
+
+.arizonia-regular {
+  font-family: "Arizonia", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.bonheur-royale-regular {
+  font-family: "Bonheur Royale", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.jim-nightshade-regular {
+  font-family: "Jim Nightshade", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.megrim-regular {
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 .App {
   text-align: center;
 }
