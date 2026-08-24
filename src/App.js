@@ -1,6 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'masonry-layout/dist/masonry.pkgd.min.js';
 import Backdrop from './Components/Backdrop';
 import { BrowserRouter } from 'react-router-dom';
 import { createContext } from 'react';

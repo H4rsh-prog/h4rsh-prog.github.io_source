@@ -49,8 +49,8 @@ export default function Projects() {
         }, 2000);
     },[startFlag]);
     return (
-        <div id="project_wrapper" style={{height:"100%", width:"100%", marginTop:"2.7%"}}>
-            <div className="container mx-auto my-auto" id="project_container" style={{position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem"}}>
+        <div id="project_wrapper" style={{height:"90%", width:"100%", marginTop:"5rem"}}>
+            <div className="container mx-auto my-auto" id="project_container" style={{opacity:0, overflow:"hidden", position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem"}}>
                 <div className="row mx-auto" style={{width:"100%", position:"absolute"}}>
                     <div className="col my-1">
                         <p className="display-3 megrim-regular" ref={ref.project_header} style={{textAlign:"end", marginRight:"1rem"}}></p>
@@ -61,20 +61,24 @@ export default function Projects() {
                         <p className="megrim-regular header-description" style={{textAlign:"end", marginRight:"1.5rem"}}>This section is under construction</p>
                     </div>
                 </div>
-                <div className="row mx-auto" style={{position:"relative", width:"100%", height:"75%", marginTop:"8rem", overflowY:"scroll", overflowX:"hidden", border:"1px solid red"}}>
-                    {projects.map((project, index) => (
-                        <div key={index} className="row-lg col-xl-6 mb-4">
-                            <div className="card h-100">
-                                <div className="card-body">
-                                    {(project.name) ? <h5 className="card-title">{project.name}</h5> : null}
-                                    {(project.description) ? <p className="card-text">{project.description}</p> : null}
-                                    {(project.technologies) ? <p className="card-text">Technologies: {project.technologies.join(", ")}</p> : null}
-                                    {(project.url) ? <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">View Project</a> : null}
-                                </div>
+                <div className="row mx-auto" style={{position:"relative", width:"100%", height:"70%", marginTop:"8rem", overflowY:"scroll", overflowX:"hidden", border:"1px solid red"}}>
+                    <div className="col-6 g-2">
+                        {projects.map((project, index) => (
+                        <div key={index} className="card mb-2">
+                            <div className="card-body">
+                                {(project.name) ? <h5 className="card-title">{project.name}</h5> : null}
+                                {(project.description) ? <p className="card-text">{project.description}</p> : null}
+                                {(project.technologies) ? <p className="card-text">Technologies: {project.technologies.join(", ")}</p> : null}
+                                {(project.url) ? <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">View Project</a> : null}
                             </div>
                         </div>
                     ))}
-                    <div className="h-25" style={{backgroundColor:"red", position:"absolute", bottom:"0"}}></div>
+                    </div>
+                    <div className="col">
+                        <div className="container mx-auto my-auto" style={{opacity:0, position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem"}}>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -10,6 +10,10 @@
   border: 1px solid red;
 }
 
+.navbar-link {
+  text-decoration: none;
+  color: var(--accent-color);
+}
 
 .arizonia-regular {
   font-family: "Arizonia", cursive;
