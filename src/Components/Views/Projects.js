@@ -6,19 +6,43 @@ import CLASS_PROJECT from "./View_Components/CLASS_PROJECT";
 gsap.registerPlugin(ScrambleTextPlugin);
 
 const projects = [
-    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
-    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"]}),
-    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
-    new CLASS_PROJECT({description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
-    new CLASS_PROJECT({name: "Old Resume", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
-    new CLASS_PROJECT({name: "Old Resume", link: "https://h4rsh-prog.github.io/"}),
-    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
-    new CLASS_PROJECT({name: "Old Resume", description: "Resume Portfolio made on React.js", technologies: ["React", "Nothing Else"], link: "https://h4rsh-prog.github.io/"}),
+    new CLASS_PROJECT(
+        "CyberSAKura",
+        // "CyberSAKura is a modular Swiss Army knife platform for encryption, encoding, hashing, steganography and more — all in one lightweight, extensible toolkit.",
+        // ["API-GATEWAY", "CYBERSECURITY-TOOLS", "MICROSERVICE-ARCHITECTURE", "MODULARIZATION", "SPRING-BOOT", "SPRING-CLOUD", "SPRING-SECURITY"],
+        "cyberSAKura"
+    ),
+    new CLASS_PROJECT(
+        "Face Recognition Service",
+        "face-recognition-service"
+    ),
+    new CLASS_PROJECT(
+        "Interpretor",
+        "Interpretor"
+    ),
+    new CLASS_PROJECT(
+        "Marigold",
+        "Marigold"
+    ),
+    new CLASS_PROJECT(
+        "LZ77 Compression Service",
+        "LZ_CompressionAlgo"
+    ),
+    new CLASS_PROJECT(
+        "LinkedIn Content Automation Service",
+        "LinkedIn_ContentAutomation"
+    ),
+    new CLASS_PROJECT(
+        "Image LSB Steganography Service",
+        "STEGANOGRAPHER_IMG_LSB"
+    ),
     
 ];
 
 export default function Projects() {
     const [startFlag, setStartFlag] = useState(false);
+    const [expandedProject, setExpandedProject] = useState(null);
+
     const ref = {
         project_header: useRef()
     }
@@ -46,8 +70,36 @@ export default function Projects() {
                     tweenLength: true
                 }, duration: 3.5, ease: "power4.out"}, "-=2.5")
                 .to(".header-description", {opacity: 1, duration: 1, ease: "power4.out"}, "-=2.5");
+            Array.from(document.getElementsByClassName("project_item")).forEach((project, index) => {
+                project.addEventListener("mouseenter", () => {
+                    gsap.to(project, {scale: 1.05, backgroundColor: "var(--secondary-color)", duration: 0.3, ease: "power4.out"});
+                });
+                project.addEventListener("mouseleave", () => {
+                    gsap.to(project, {scale: 1, backgroundColor: "var(--accent-color)", duration: 0.3, ease: "power4.out"});
+                });
+                project.addEventListener("click", () => {
+                    if(expandedProject == index) {
+                        setExpandedProject(null);
+                    } else {
+                        setExpandedProject(index);
+                    }
+                    console.log(`iframe link set to ${projects[index].url}`);
+                    
+                });
+            });
         }, 2000);
     },[startFlag]);
+    useEffect(() => {
+        if(!startFlag) {
+            setStartFlag(true);
+            return;
+        }
+        gsap.to("#project_details", {opacity: 0, duration: 0.5, ease: "power4.out"})
+        setTimeout(() => {
+            document.getElementById("project_details").style.backgroundImage = `url(${generateGithubCardURL(projects[expandedProject].repository)})`;
+            gsap.to("#project_details", {opacity: 1, duration: 0.5, ease: "power4.out"});
+        },800);
+    }, [expandedProject]);
     return (
         <div id="project_wrapper" style={{height:"90%", width:"100%", marginTop:"5rem"}}>
             <div className="container mx-auto my-auto" id="project_container" style={{opacity:0, overflow:"hidden", position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem"}}>
@@ -61,26 +113,27 @@ export default function Projects() {
                         <p className="megrim-regular header-description" style={{textAlign:"end", marginRight:"1.5rem"}}>This section is under construction</p>
                     </div>
                 </div>
-                <div className="row mx-auto" style={{position:"relative", width:"100%", height:"70%", marginTop:"8rem", overflowY:"scroll", overflowX:"hidden", border:"1px solid red"}}>
-                    <div className="col-6 g-2">
-                        {projects.map((project, index) => (
-                        <div key={index} className="card mb-2">
-                            <div className="card-body">
-                                {(project.name) ? <h5 className="card-title">{project.name}</h5> : null}
-                                {(project.description) ? <p className="card-text">{project.description}</p> : null}
-                                {(project.technologies) ? <p className="card-text">Technologies: {project.technologies.join(", ")}</p> : null}
-                                {(project.url) ? <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">View Project</a> : null}
+                <div className="row mx-auto" style={{overflow:"hidden", height:"70%", top:"8rem", position:"relative"}}>
+                    <div className="col-3 ms-3" style={{overflowY:"scroll", height:"100%"}}>
+                        <div className="row g-2">
+                            {projects.map((project, index) => (
+                            <div key={index} className="card mb-2 project_item">
+                                <div className="card-body" >
+                                    <h5 className="card-title">{project.name}</h5>
+                                </div>
                             </div>
+                        ))}
                         </div>
-                    ))}
                     </div>
                     <div className="col">
-                        <div className="container mx-auto my-auto" style={{opacity:0, position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem"}}>
-
-                        </div>
+                        <div id="project_details" style={{postion:"fixed", width:"100%", height:"100%", backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"right", borderRadius:"2rem"}}></div>
                     </div>
                 </div>
             </div>
         </div>
     );
+}
+
+function generateGithubCardURL(repository) {
+    return `https://githubcard.com/H4rsh-prog/${repository}.svg?d=gJuExwGYmljL`;
 }
