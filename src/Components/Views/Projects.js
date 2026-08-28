@@ -105,7 +105,7 @@ export default function Projects() {
             document.getElementById("project_details").addEventListener("mouseleave", () => {
                 gsap.to("#project_details", {scale: 1, duration: 0.3, ease: "power4.out"});
             });
-        }, 2000);
+        }, 200);
     },[startFlag]);
     useEffect(() => {
         if(!startFlag) {
@@ -147,7 +147,7 @@ export default function Projects() {
                         <div className="position-absolute h-25 top-0 start-0 ms-4" style={{background:"linear-gradient(var(--primary-color), transparent)", width:"49%", pointerEvents:"none"}}></div>
                     </div>
                     <div className="col-3" style={{position:"relative", top:"0.5rem"}}>
-                        <a href={expandedProject!=null?`https://github.com/H4rsh-prog/${projects[expandedProject].repository}`:null}>
+                        <a target="_blank" href={expandedProject!=null?`https://github.com/H4rsh-prog/${projects[expandedProject].repository}`:null}>
                             <div id="project_details" style={{opacity:0, postion:"fixed", width:"100%", height:"100%", backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"right"}}></div>
                         </a>
                     </div>
