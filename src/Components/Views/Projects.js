@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { ScrambleTextPlugin } from "gsap/all";
 import CLASS_PROJECT from "./View_Components/CLASS_PROJECT";
+import loading_gif from "../Backdrop_Components/assets/loading.gif"
 
 gsap.registerPlugin(ScrambleTextPlugin);
 
@@ -44,7 +45,8 @@ export default function Projects() {
     const [pendingCardFetch, setCardFetch] = useTransition();
 
     const ref = {
-        project_header: useRef()
+        project_header: useRef(),
+        zoomed_details: useRef()
     }
     useEffect(()=>{
         if(!startFlag) {
@@ -97,6 +99,7 @@ export default function Projects() {
                 curIndx++
                 if(curIndx>=projects.length-1) {clearInterval(IntervalID)}
                 document.getElementById("project_details").style.backgroundImage = `url(${generateGithubCardURL(projects[curIndx].repository)})`;
+                ref.zoomed_details.current.style.backgroundImage = `url(${generateGithubCardURLZoomed(projects[curIndx].repository)})`;
             },200);
             document.getElementById("project_details").addEventListener("mouseenter", () => {
                 gsap.to("#project_details", {scale: 0.95, duration: 0.3, ease: "power4.out"});
@@ -114,13 +117,14 @@ export default function Projects() {
         //HANDLING CARD CONTENT
         setCardFetch(async ()=>{
             await gsap.to("#project_details", {x:-100, opacity: 0, duration: 0.5, ease: "power4.out"})
-            document.getElementById("project_details").style.backgroundImage = `url(${generateGithubCardURL(projects[expandedProject].repository)})`;
+            await fetch(generateGithubCardURL(projects[expandedProject].repository)).then(()=>{document.getElementById("project_details").style.backgroundImage = `url(${generateGithubCardURL(projects[expandedProject].repository)})`})
+            await fetch(generateGithubCardURLZoomed(projects[expandedProject].repository)).then(()=>{ref.zoomed_details.current.style.backgroundImage = `url(${generateGithubCardURLZoomed(projects[expandedProject].repository)})`})
             gsap.to("#project_details", {x:0, opacity: 1, duration: 0.5, ease: "power4.out"});
         })
     }, [expandedProject]);
     return (
         <div id="project_wrapper" style={{height:"90%", width:"100%", marginTop:"5rem"}}>
-            <div className="container mx-auto my-auto" id="project_container" style={{opacity:0, overflow:"hidden", position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem"}}>
+            <div className="container mx-auto my-auto" id="project_container" style={{opacity:0, overflow:"hidden", position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem", color:"var(--accent-color)"}}>
                 <div className="row mx-auto" style={{width:"100%", position:"absolute"}}>
                     <div className="col my-1">
                         <p className="display-3 megrim-regular" ref={ref.project_header} style={{textAlign:"end", marginRight:"1rem"}}></p>
@@ -150,9 +154,8 @@ export default function Projects() {
                             <div id="project_details" style={{opacity:0, postion:"fixed", width:"100%", height:"100%", backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"right"}}></div>
                         </a>
                     </div>
-                    <div className="col w-100 h-100" style={{outline:"0.5rem solid var(--secondary-color)", outlineOffset:"-1rem", borderRadius:"2rem"}}>
-                        
-                    </div>
+                    {pendingCardFetch?<div className="col w-100 h-100 me-2" style={{backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"center", backgroundImage:loading_gif}}/>:null}
+                    <div className="col w-100 h-100 me-2" ref={ref.zoomed_details} id="project_details_zoomed" style={{borderRadius:"2rem", opacity:pendingCardFetch?0:1, backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"center"}}/>
                 </div>
             </div>
         </div>
@@ -161,4 +164,8 @@ export default function Projects() {
 
 function generateGithubCardURL(repository) {
     return `https://githubcard.com/H4rsh-prog/${repository}.svg?d=gJuExwGYmljL`;
+}
+
+function generateGithubCardURLZoomed(repository) {
+    return `https://githubcard.com/H4rsh-prog/${repository}.svg?d=yuQfj-RpHQhT`;
 }
