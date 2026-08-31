@@ -42,7 +42,7 @@ export default function AboutMe() {
     }, [startFlag])
     return (
         <div id="aboutme_wrapper" style={{height:"90%", width:"100%", marginTop:"5rem"}}>
-            <div className="container mx-auto my-auto" id="aboutme_container" style={{opacity:0, overflow:"hidden", overflowY:"scroll", position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem"}}>
+            <div className="container mx-auto my-auto" id="aboutme_container" style={{opacity:0, overflow:"hidden", overflowY:"scroll", position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem", color:"var(--accent-color)"}}>
                 <div className="row mx-auto mt-4 pt-4 px-5 pb-3">
                     <div className="col mt-5 my-auto">
                         <img src={`https://ghstats.dev/api/card?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="GitHub Stats Card" />
