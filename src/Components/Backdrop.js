@@ -8,6 +8,7 @@ import Skillset from "./Views/Skillset";
 import AboutMe from "./Views/AboutMe";
 import Bush from "./Backdrop_Components/Bush";
 import Projects from "./Views/Projects";
+import DelayLoader from "./Backdrop_Components/DelayLoader";
 
 export default function Backdrop() {
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function Backdrop() {
                 <div style={{position:"absolute"}}><NameTag/></div>
                 <div id="content_container" style={{height:"90%", width:"100%", zIndex:-1}}>
                         <Routes>
-                            <Route path="/" element={<Projects/>}/>
+                            <Route path="/" element={<DelayLoader component={<Projects/>} initDelay={1.7} loadDelay={1}/>}/>
                             <Route path="/skillset" element={<Skillset/>}/>
                             <Route path="/projects" element={<Projects/>}/>
                             <Route path="/about-me" element={<AboutMe/>}/>

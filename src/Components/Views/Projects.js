@@ -1,11 +1,11 @@
 import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { ScrambleTextPlugin } from "gsap/all";
 import CLASS_PROJECT from "./View_Components/CLASS_PROJECT";
 
 gsap.registerPlugin(ScrambleTextPlugin);
 
-const projects = [
+var projects = [
     new CLASS_PROJECT(
         "CyberSAKura",
         // "CyberSAKura is a modular Swiss Army knife platform for encryption, encoding, hashing, steganography and more — all in one lightweight, extensible toolkit.",
@@ -36,12 +36,12 @@ const projects = [
         "Image LSB Steganography Service",
         "STEGANOGRAPHER_IMG_LSB"
     ),
-    
 ];
 
 export default function Projects() {
     const [startFlag, setStartFlag] = useState(false);
     const [expandedProject, setExpandedProject] = useState(null);
+    const [pendingCardFetch, setCardFetch] = useTransition();
 
     const ref = {
         project_header: useRef()
@@ -49,12 +49,19 @@ export default function Projects() {
     useEffect(()=>{
         if(!startFlag) {
             setStartFlag(true);
+            projects = projects.sort(() => Math.random() >= 0.5);
             return;
         }
         gsap.set(ref.project_header.current, {opacity:0});
         gsap.set(".header-description", {opacity:0});
         gsap.set("#project_container", {height:0, width:0, opacity:0});
         setTimeout(()=>{
+            gsap.to(".project-item-name", {scrambleText: {
+                    text:"{original}",
+                    chars:"upperAndLowerCase",
+                    revealDelay: 1.2,
+                    tweenLength: true,
+                }, duration: 2.5, ease: "power4.out"})
             gsap.timeline()
                 .to("#project_container", {height: "100%", width: "97%", opacity: 1, duration:1.4, ease: "power4.out"})
                 .to(ref.project_header.current, {scrambleText: {
@@ -83,22 +90,34 @@ export default function Projects() {
                     } else {
                         setExpandedProject(index);
                     }
-                    console.log(`iframe link set to ${projects[index].url}`);
-                    
                 });
             });
-        }, 2000);
+            // PRELOADING CARDS
+            let curIndx = -1;
+            let IntervalID = setInterval(()=>{
+                curIndx++
+                if(curIndx>=projects.length-1) {clearInterval(IntervalID)}
+                document.getElementById("project_details").style.backgroundImage = `url(${generateGithubCardURL(projects[curIndx].repository)})`;
+            },200);
+            document.getElementById("project_details").addEventListener("mouseenter", () => {
+                gsap.to("#project_details", {scale: 0.95, duration: 0.3, ease: "power4.out"});
+            });
+            document.getElementById("project_details").addEventListener("mouseleave", () => {
+                gsap.to("#project_details", {scale: 1, duration: 0.3, ease: "power4.out"});
+            });
+        }, 200);
     },[startFlag]);
     useEffect(() => {
         if(!startFlag) {
             setStartFlag(true);
             return;
         }
-        gsap.to("#project_details", {opacity: 0, duration: 0.5, ease: "power4.out"})
-        setTimeout(() => {
+        //HANDLING CARD CONTENT
+        setCardFetch(async ()=>{
+            await gsap.to("#project_details", {x:-100, opacity: 0, duration: 0.5, ease: "power4.out"})
             document.getElementById("project_details").style.backgroundImage = `url(${generateGithubCardURL(projects[expandedProject].repository)})`;
-            gsap.to("#project_details", {opacity: 1, duration: 0.5, ease: "power4.out"});
-        },800);
+            gsap.to("#project_details", {x:0, opacity: 1, duration: 0.5, ease: "power4.out"});
+        })
     }, [expandedProject]);
     return (
         <div id="project_wrapper" style={{height:"90%", width:"100%", marginTop:"5rem"}}>
@@ -114,19 +133,26 @@ export default function Projects() {
                     </div>
                 </div>
                 <div className="row mx-auto" style={{overflow:"hidden", height:"70%", top:"8rem", position:"relative"}}>
-                    <div className="col-3 ms-3" style={{overflowY:"scroll", height:"100%"}}>
-                        <div className="row g-2">
+                    <div className="col-3 ms-3 px-4" style={{overflowY:"scroll", height:"100%", zIndex:1}}>
+                        <div className="row g-2 my-2">
                             {projects.map((project, index) => (
                             <div key={index} className="card mb-2 project_item">
                                 <div className="card-body" >
-                                    <h5 className="card-title">{project.name}</h5>
+                                    <h5 className="card-title project-item-name">{pendingCardFetch && expandedProject==index?"Loading..":project.name}</h5>
                                 </div>
                             </div>
                         ))}
                         </div>
+                        <div className="position-absolute h-25 bottom-0 start-0 ms-4" style={{background:"linear-gradient(transparent, var(--primary-color))", width:"49%", pointerEvents:"none"}}></div>
+                        <div className="position-absolute h-25 top-0 start-0 ms-4" style={{background:"linear-gradient(var(--primary-color), transparent)", width:"49%", pointerEvents:"none"}}></div>
                     </div>
-                    <div className="col">
-                        <div id="project_details" style={{postion:"fixed", width:"100%", height:"100%", backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"right", borderRadius:"2rem"}}></div>
+                    <div className="col-3" style={{position:"relative", top:"0.5rem"}}>
+                        <a target="_blank" href={expandedProject!=null?`https://github.com/H4rsh-prog/${projects[expandedProject].repository}`:null}>
+                            <div id="project_details" style={{opacity:0, postion:"fixed", width:"100%", height:"100%", backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"right"}}></div>
+                        </a>
+                    </div>
+                    <div className="col w-100 h-100" style={{outline:"0.5rem solid var(--secondary-color)", outlineOffset:"-1rem", borderRadius:"2rem"}}>
+                        
                     </div>
                 </div>
             </div>
