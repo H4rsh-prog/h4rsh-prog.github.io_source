@@ -53,7 +53,6 @@ export default function Projects() {
             return;
         }
         gsap.set(ref.project_header.current, {opacity:0});
-        gsap.set(".header-description", {opacity:0});
         gsap.set("#project_container", {height:0, width:0, opacity:0});
         setTimeout(()=>{
             gsap.to(".project-item-name", {scrambleText: {
@@ -129,7 +128,7 @@ export default function Projects() {
                 </div>
                 <div className="row mx-auto" style={{width:"100%", position:"absolute", top:"5rem"}}>
                     <div className="col">
-                        <p className="megrim-regular header-description" style={{textAlign:"end", marginRight:"1.5rem"}}>This section is under construction</p>
+                        <p className="megrim-regular header-description" style={{textAlign:"end", marginRight:"1.5rem", opacity:0}}>This section is under construction</p>
                     </div>
                 </div>
                 <div className="row mx-auto" style={{overflow:"hidden", height:"70%", top:"8rem", position:"relative"}}>
