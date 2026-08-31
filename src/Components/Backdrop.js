@@ -26,7 +26,7 @@ export default function Backdrop() {
                 <div style={{position:"absolute"}}><NameTag/></div>
                 <div id="content_container" style={{height:"90%", width:"100%", zIndex:-1}}>
                         <Routes>
-                            <Route path="/" element={<DelayLoader component={<Projects/>} initDelay={1.7} loadDelay={1}/>}/>
+                            <Route path="/" element={<DelayLoader component={<AboutMe/>} initDelay={1.7} loadDelay={1}/>}/>
                             <Route path="/skillset" element={<Skillset/>}/>
                             <Route path="/projects" element={<Projects/>}/>
                             <Route path="/about-me" element={<AboutMe/>}/>
