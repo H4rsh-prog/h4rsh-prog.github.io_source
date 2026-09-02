@@ -1,43 +1,11 @@
 import gsap from "gsap";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { ScrambleTextPlugin } from "gsap/all";
-import CLASS_PROJECT from "./View_Components/CLASS_PROJECT";
+import {Project_List as projects, generateGithubCardURL, generateGithubCardURLZoomed} from "./View_Components/CLASS_PROJECT";
 import loading_gif from "../Backdrop_Components/assets/loading.gif"
 
 gsap.registerPlugin(ScrambleTextPlugin);
 
-var projects = [
-    new CLASS_PROJECT(
-        "CyberSAKura",
-        // "CyberSAKura is a modular Swiss Army knife platform for encryption, encoding, hashing, steganography and more — all in one lightweight, extensible toolkit.",
-        // ["API-GATEWAY", "CYBERSECURITY-TOOLS", "MICROSERVICE-ARCHITECTURE", "MODULARIZATION", "SPRING-BOOT", "SPRING-CLOUD", "SPRING-SECURITY"],
-        "cyberSAKura"
-    ),
-    new CLASS_PROJECT(
-        "Face Recognition Service",
-        "face-recognition-service"
-    ),
-    new CLASS_PROJECT(
-        "Interpretor",
-        "Interpretor"
-    ),
-    new CLASS_PROJECT(
-        "Marigold",
-        "Marigold"
-    ),
-    new CLASS_PROJECT(
-        "LZ77 Compression Service",
-        "LZ_CompressionAlgo"
-    ),
-    new CLASS_PROJECT(
-        "LinkedIn Content Automation Service",
-        "LinkedIn_ContentAutomation"
-    ),
-    new CLASS_PROJECT(
-        "Image LSB Steganography Service",
-        "STEGANOGRAPHER_IMG_LSB"
-    ),
-];
 
 export default function Projects() {
     const [startFlag, setStartFlag] = useState(false);
@@ -51,7 +19,6 @@ export default function Projects() {
     useEffect(()=>{
         if(!startFlag) {
             setStartFlag(true);
-            projects = projects.sort(() => Math.random() >= 0.5);
             return;
         }
         gsap.set(ref.project_header.current, {opacity:0});
@@ -93,14 +60,6 @@ export default function Projects() {
                     }
                 });
             });
-            // PRELOADING CARDS
-            let curIndx = -1;
-            let IntervalID = setInterval(()=>{
-                curIndx++
-                if(curIndx>=projects.length-1) {clearInterval(IntervalID)}
-                document.getElementById("project_details").style.backgroundImage = `url(${generateGithubCardURL(projects[curIndx].repository)})`;
-                ref.zoomed_details.current.style.backgroundImage = `url(${generateGithubCardURLZoomed(projects[curIndx].repository)})`;
-            },200);
             document.getElementById("project_details").addEventListener("mouseenter", () => {
                 gsap.to("#project_details", {scale: 0.95, duration: 0.3, ease: "power4.out"});
             });
@@ -160,12 +119,4 @@ export default function Projects() {
             </div>
         </div>
     );
-}
-
-function generateGithubCardURL(repository) {
-    return `https://githubcard.com/H4rsh-prog/${repository}.svg?d=gJuExwGYmljL`;
-}
-
-function generateGithubCardURLZoomed(repository) {
-    return `https://githubcard.com/H4rsh-prog/${repository}.svg?d=yuQfj-RpHQhT`;
 }
