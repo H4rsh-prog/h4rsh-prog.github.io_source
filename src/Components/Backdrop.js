@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import gsap from "gsap";
 import WaddlingGoose from "./Backdrop_Components/WaddlingGoose";
 import NavBar from "./Backdrop_Components/NavBar";
@@ -9,8 +9,16 @@ import AboutMe from "./Views/AboutMe";
 import Bush from "./Backdrop_Components/Bush";
 import Projects from "./Views/Projects";
 import DelayLoader from "./Backdrop_Components/DelayLoader";
+import {Project_List as projects, generateGithubCardURL, generateGithubCardURLZoomed} from "./Views/View_Components/CLASS_PROJECT";
 
 export default function Backdrop() {
+    const [colorHex, setColorHex] = useState({
+        primary: "1F2421",
+        secondary: "216869",
+        tertiary: "49A078",
+        transitionary: "9CC5A1",
+        accent: "DCE1DE"
+    })
     useEffect(() => {
         gsap.set(".anim", {opacity: 0});
         setTimeout(()=>{gsap.to("#waddling-goose", {opacity: 1, duration: 3.5, ease: "power4.out"})}, 3000);
@@ -26,7 +34,7 @@ export default function Backdrop() {
                 <div style={{position:"absolute"}}><NameTag/></div>
                 <div id="content_container" style={{height:"90%", width:"100%", zIndex:-1}}>
                         <Routes>
-                            <Route path="/" element={<DelayLoader component={<AboutMe/>} initDelay={1.7} loadDelay={1}/>}/>
+                            <Route path="/" element={<DelayLoader component={<Skillset/>} initDelay={1.7} loadDelay={1}/>}/>
                             <Route path="/skillset" element={<Skillset/>}/>
                             <Route path="/projects" element={<Projects/>}/>
                             <Route path="/about-me" element={<AboutMe/>}/>
@@ -34,6 +42,24 @@ export default function Backdrop() {
                 </div>
                 <WaddlingGoose/>
                 <Bush/>
+                {/* PRE LOADING ASSETS */}
+                    <div className="" style={{opacity:0, pointerEvents:"none"}}>
+                        {projects.map((project, index) => {
+                            return (
+                                <div>   
+                                    <img key={index} src={generateGithubCardURL(project.repository)} alt={`Project ${index+1} Card`} />
+                                    <img key={index} src={generateGithubCardURLZoomed(project.repository)} alt={`Project ${index+1} Card`} />
+                                </div>
+                            )
+                        })}
+                        <div>
+                            <img src={`https://ghstats.dev/api/langs?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}&layout=donut_vertical`} alt="Top Languages" />
+                            <img src="https://avatars.githubusercontent.com/u/182053834?v=4" alt="Github Profile Picture"/>
+                            <img src={`https://ghstats.dev/api/sparkline?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="Contribution Sparkline"/>
+                            <img src={`https://ghstats.dev/api/card?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="GitHub Stats Card" />
+                        </div>
+                    </div>
+                {/* PRE LOADING ASSETS */}
             </div>
         </div>
     );
