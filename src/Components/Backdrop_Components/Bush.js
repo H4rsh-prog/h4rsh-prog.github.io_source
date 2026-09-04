@@ -1,8 +1,10 @@
 import gsap from "gsap";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { browserContext } from "../../App";
 
 
 export default function Bush() {
+    const browser = useContext(browserContext);
     const [startFlag, setStartFlag] = useState(false);
     const styleObj = {
         backgroundColor:"var(--primary-color)",
@@ -23,7 +25,7 @@ export default function Bush() {
         });
     }, [startFlag]);
     return (
-        <div style={{position:"absolute", bottom:"18rem", left:"-2rem", zIndex:0}}>
+        <div style={{position:"absolute", bottom:browser.DPI == "MOBILE" ? "12rem" : "18rem", left:"-2rem", zIndex:0, transformOrigin:"left bottom", transform: browser.DPI == "MOBILE" ? "scale(0.7)" : null}}>
             <div className="bush" style={{...styleObj, height:"15rem", width:"10rem", left:"10rem", top:"8rem", border:".5rem solid var(--accent-color)"}}></div>
             <div className="bush" style={{...styleObj, height:"25rem", width:"10rem", left:"14rem", top:"13rem", border:".5rem solid var(--accent-color)"}}></div>
             <div className="bush" style={{...styleObj, height:"20rem", width:"10rem", left:"6rem", top:"5rem", border:".5rem solid var(--accent-color)"}}></div>
