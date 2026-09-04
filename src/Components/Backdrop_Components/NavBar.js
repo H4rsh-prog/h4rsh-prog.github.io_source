@@ -35,11 +35,11 @@ export default function NavBar() {
             });
         } else {
             document.getElementById("navbar_menu").addEventListener("click", ()=>{
-                gsap.to(navbar_container.current, {height: "18rem", duration: 1, ease: "power4.out"});
+                gsap.to(navbar_container.current, {height: values.navbar.height[values.DPI], duration: 1, ease: "power4.out"});
                 gsap.to("#sleeping-cat", {opacity: 1, duration: 3.5, ease: "power4.out"})
                 gsap.to("#nav_elements", {opacity: 1, duration: 1, ease: "power4.out"});
-                gsap.to(".nav_elem_path", {display:"block", duration: 1, y : 15,  ease: "power4.out"});
-                gsap.to("#navbar_menu", {opacity: 0, duration: 1, ease: "power4.out"});
+                gsap.to(".nav_elem_path", {display:"block", duration: 1,  ease: "power4.out"});
+                gsap.to("#navbar_menu", {opacity: 0, duration: 1, pointerEvents:"none", ease: "power4.out"});
             });
             Array.from(document.getElementsByClassName("nav_elem_path")).forEach((elem)=>{
                 elem.addEventListener("click", ()=>{
@@ -47,7 +47,7 @@ export default function NavBar() {
                     gsap.to("#sleeping-cat", {opacity: 0, duration: 3.5, ease: "power4.out"})
                     gsap.to(navbar_container.current, {height: "6rem", duration: 1, ease: "power4.out"});
                     gsap.to(".nav_elem_path", {display:"none", duration: 0.7, ease: "power4.out"});
-                    gsap.to("#navbar_menu", {opacity: 1, duration: 1, ease: "power4.out"});
+                    gsap.to("#navbar_menu", {opacity: 1, duration: 1, pointerEvents: "auto", ease: "power4.out"});
                 });
                 elem.addEventListener("mouseenter", ()=>{gsap.to(elem, {color: "var(--secondary-color)"})});
                 elem.addEventListener("mouseleave", ()=>{gsap.to(elem, {color: "var(--accent-color)"})});
@@ -59,18 +59,18 @@ export default function NavBar() {
             {values.TOUCH ? <span class="material-symbols-outlined position-absolute" id="navbar_menu" style={{color:"var(--accent-color)", textAlign:"start", fontSize:"3rem", zIndex: 1}}>menu</span>:null}
             <div className="row mx-auto mb-5" id="nav_elements" style={{height:"70%", width:"80%"}}>
                 <div className="col-lg">
-                    <NavLink className="navbar-link" to="/skillset">
-                        <p className="display-4 megrim-regular nav_elem_path" style={{textAlign:"center", marginRight:"1rem", display:"none"}}>SKILLSET</p>
+                    <NavLink className="navbar-link  justify-content items-center align-items" to="/skillset">
+                        <p className="display-4 megrim-regular nav_elem_path" style={{textAlign:"center", display:"none"}}>SKILLSET</p>
                     </NavLink>
                 </div>
                 <div className="col-lg">
                     <NavLink className="navbar-link" to="/projects">
-                        <p className="display-4 megrim-regular nav_elem_path" style={{textAlign:"center", marginRight:"1rem", display:"none"}}>PROJECTS</p>
+                        <p className="display-4 megrim-regular nav_elem_path" style={{textAlign:"center", display:"none"}}>PROJECTS</p>
                     </NavLink>
                 </div>
                 <div className="col-lg">
                     <NavLink className="navbar-link" to="/about-me">
-                        <p className="display-4 megrim-regular nav_elem_path" style={{textAlign:"center", marginRight:"1rem", display:"none"}}>ABOUT ME</p>
+                        <p className="display-4 megrim-regular nav_elem_path" style={{textAlign:"center", display:"none"}}>ABOUT ME</p>
                     </NavLink>
                 </div>
             </div>

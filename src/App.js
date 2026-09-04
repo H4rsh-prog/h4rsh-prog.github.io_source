@@ -27,15 +27,23 @@ function App() {
         height : {
           HDPI : "8rem",
           MDPI : "10rem",
-          LDPI : "12rem"
+          LDPI : "18rem",
+          MOBILE : "18rem"
         },
     },
+    nametag : {
+        top : {
+          false : "0rem",
+          true : "3rem"
+        }
+    }
   });
   useEffect(() => {
     setResponsiveValues(prev => ({...prev,
       DPI: 
         (window.outerWidth > 1140) ? "HDPI" :
-        (window.outerWidth > 992) ? "MDPI" : "LDPI",
+        (window.outerWidth > 992) ? "MDPI" :
+        (window.outerWidth > 499) ? "LDPI" : "MOBILE",
       TOUCH: true
     }));
     console.log(window.outerWidth);
