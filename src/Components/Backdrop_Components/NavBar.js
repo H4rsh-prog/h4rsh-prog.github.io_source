@@ -34,24 +34,28 @@ export default function NavBar() {
                 elem.parentElement.addEventListener("mouseleave", ()=>{gsap.to(elem, {color: "var(--accent-color)"})});
             });
         } else {
-            document.getElementById("navbar_menu").addEventListener("click", ()=>{
-                gsap.to(navbar_container.current, {height: values.navbar.height[values.DPI], duration: 1, ease: "power4.out"});
-                gsap.to("#sleeping-cat", {opacity: 1, duration: 3.5, ease: "power4.out"})
-                gsap.to("#nav_elements", {opacity: 1, duration: 1, ease: "power4.out"});
-                gsap.to(".nav_elem_path", {display:"block", duration: 1,  ease: "power4.out"});
-                gsap.to("#navbar_menu", {opacity: 0, duration: 1, pointerEvents:"none", ease: "power4.out"});
-            });
-            Array.from(document.getElementsByClassName("nav_elem_path")).forEach((elem)=>{
-                elem.addEventListener("click", ()=>{
+            let toggle_flag = false;
+            var menu_toggle = ()=>{
+                toggle_flag = !toggle_flag;
+                if(toggle_flag) {
+                    gsap.to(navbar_container.current, {height: values.navbar.height[values.DPI], duration: 1, ease: "power4.out"});
+                    gsap.to("#sleeping-cat", {opacity: 1, duration: 3.5, ease: "power4.out"})
+                    gsap.to("#nav_elements", {opacity: 1, duration: 1, ease: "power4.out"});
+                    gsap.to(".nav_elem_path", {display:"block", duration: 1,  ease: "power4.out"});
+                    gsap.to("#navbar_menu", {opacity: 0, duration: 1, pointerEvents:"none", ease: "power4.out"});
+                } else {
                     gsap.to("#nav_elements", {opacity: 0, duration: 1, ease: "power4.out"});
                     gsap.to("#sleeping-cat", {opacity: 0, duration: 3.5, ease: "power4.out"})
                     gsap.to(navbar_container.current, {height: "6rem", duration: 1, ease: "power4.out"});
                     gsap.to(".nav_elem_path", {display:"none", duration: 0.7, ease: "power4.out"});
-                    gsap.to("#navbar_menu", {opacity: 1, duration: 1, pointerEvents: "auto", ease: "power4.out"});
-                });
+                    gsap.to("#navbar_menu", {opacity: 1, duration: 1, pointerEvents: "auto", ease: "power4.out"});    
+                }
+            }
+            Array.from(document.getElementsByClassName("nav_elem_path")).forEach((elem)=>{
                 elem.addEventListener("mouseenter", ()=>{gsap.to(elem, {color: "var(--secondary-color)"})});
                 elem.addEventListener("mouseleave", ()=>{gsap.to(elem, {color: "var(--accent-color)"})});
             });
+            document.getElementById("navbar_container").addEventListener("click", menu_toggle);
         }
     },[startFlag]);
     return (
