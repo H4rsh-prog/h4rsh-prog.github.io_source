@@ -52,7 +52,8 @@ export default function NameTag() {
             display.wrapper.current.addEventListener("mouseenter", functions.collapseLogo);
             display.wrapper.current.addEventListener("mouseleave", functions.expandLogo);
         } else {
-
+            gsap.set(display.svg.current, {opacity:0})
+            gsap.set(display.logo_anchor_wrapper.current, {scale:0.5, transformOrigin:"center top", width:"100%"});
         }
     },[startFlag]);
     return (
@@ -63,7 +64,7 @@ export default function NameTag() {
                 </div>
                 <svg id="text_svg" ref={display.svg} style={{width:"100vw", height:"100vh", pointerEvents:"none"}} xmlns="http://www.w3.org/2000/svg">
                     <g>
-                        <path id="display_path_0" ref={display.display_0} d={browser.DPI == "MOBILE" ? textPaths.bracket : textPaths.h4rsh_prog} style={{pointerEvents:"none"}}/>
+                        <path id="display_path_0" ref={display.display_0} d={textPaths.h4rsh_prog} style={{pointerEvents:"none"}}/>
                     </g>
                 </svg>
             </div>
