@@ -1,8 +1,10 @@
 import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { browserContext } from "../../App";
 
 export default function AboutMe() {
     const [startFlag, setStartFlag] = useState(false);
+    const browser = useContext(browserContext);
     const [ref, setRef] = useState({
         header : useRef(),
     })
@@ -20,7 +22,7 @@ export default function AboutMe() {
             return;
         }
         gsap.set("#aboutme_container", {height:0, width:0, opacity:0});
-        gsap.set("img", {scale:0, opacity:0});
+        gsap.set(".about-info", {scale:0, opacity:0, width:"100%", height:"auto"});
         setTimeout(()=>{
             gsap.timeline()
                 .to("#aboutme_container", {height: "100%", width: "97%", opacity: 1, duration:1.4, ease: "power4.out"})
@@ -36,31 +38,35 @@ export default function AboutMe() {
                     revealDelay: 0.2,
                     tweenLength: true
                 }, duration: 3.5, ease: "power4.out"}, "-=2.5")
-                .to("img", {opacity:1, scale:1, duration:1, ease: "power4.out"}, "-=2.5")
+                .to(".about-info", {opacity:1, scale:1, duration:1, ease: "power4.out"}, "-=2.5")
                 .to(".header-description", {opacity: 1, duration: 1, ease: "power4.out"}, "-=2.5");
         },200)
     }, [startFlag])
     return (
-        <div id="aboutme_wrapper" style={{height:"90%", width:"100%", marginTop:"5rem"}}>
+        <div id="aboutme_wrapper" style={{height:"90%", width:"100%", marginTop:browser.DPI === "MOBILE" ? "0rem" : "7rem"}}>
             <div className="container mx-auto my-auto" id="aboutme_container" style={{opacity:0, overflow:"hidden", overflowY:"scroll", position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem", color:"var(--accent-color)"}}>
                 <div className="row mx-auto mt-4 pt-4 px-5 pb-3">
-                    <div className="col mt-5 my-auto">
-                        <img src={`https://ghstats.dev/api/card?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="GitHub Stats Card" />
+                    <div className="col-lg mt-5 my-auto">
+                        <img className="about-info" src={`https://ghstats.dev/api/card?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="GitHub Stats Card" />
                     </div>
-                    <div className="col mt-5 my-auto">
-                        <img className="w-75 p-2 my-4" src="https://avatars.githubusercontent.com/u/182053834?v=4" style={{borderRadius:"20rem", border:"0.15rem solid var(--accent-color)", backgroundColor:"var(--secondary-color)"}} alt="Github Profile Picture"/>
-                        <img src={`https://ghstats.dev/api/sparkline?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="Contribution Sparkline"/>
+                    { browser.DPI != "MOBILE" ? 
+                        <div className="col-lg mt-5 my-auto">
+                            <img className="about-info w-75 p-2 my-4" src="https://avatars.githubusercontent.com/u/182053834?v=4" style={{borderRadius:"20rem", border:"0.15rem solid var(--accent-color)", backgroundColor:"var(--secondary-color)"}} alt="Github Profile Picture"/>
+                            <img className="about-info" src={`https://ghstats.dev/api/sparkline?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="Contribution Sparkline"/>
+                        </div> 
+                    : null}
+                    <div className="col-lg mt-5 p-2 my-auto">
+                        <img className="about-info" src={`https://ghstats.dev/api/langs?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}&layout=donut_vertical`} alt="Top Languages" />
                     </div>
-                    <div className="col mt-5 p-2 my-auto">
-                        <img src={`https://ghstats.dev/api/langs?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}&layout=donut_vertical`} alt="Top Languages" />
-                    </div>
+                    { browser.DPI === "MOBILE" ? 
+                        <div className="col-lg mt-5 my-auto">
+                            <img className="about-info w-75 p-2 my-4" src="https://avatars.githubusercontent.com/u/182053834?v=4" style={{borderRadius:"20rem", border:"0.15rem solid var(--accent-color)", backgroundColor:"var(--secondary-color)"}} alt="Github Profile Picture"/>
+                            <img className="about-info" src={`https://ghstats.dev/api/sparkline?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="Contribution Sparkline"/>
+                            <div style={{height:"8rem"}} />
+                        </div>
+                    : null}
                 </div>
-                <div className="row mx-auto" style={{width:"100%", position:"relative", top:"1rem"}}>
-                    <div className="col">
-                        <p className="megrim-regular header-description" style={{textAlign:"end", marginRight:"1.5rem", opacity:0}}>This section is under construction</p>
-                    </div>
-                </div>
-                <div className="row mx-auto" style={{width:"100%"}}>
+                <div className="row mx-auto" style={{width:"100%", position:"absolute", top:"1rem"}}>
                     <div className="col my-1">
                         <p className="display-3 megrim-regular" ref={ref.header} style={{textAlign:"end", marginRight:"1rem"}}></p>
                     </div>
