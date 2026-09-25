@@ -46,31 +46,38 @@ export default function AboutMe() {
         <div id="aboutme_wrapper" style={{height:"90%", width:"100%", marginTop:browser.DPI === "MOBILE" ? "0rem" : "7rem"}}>
             <div className="container mx-auto my-auto" id="aboutme_container" style={{opacity:0, overflow:"hidden", overflowY:"scroll", position:"relative", backgroundColor:"var(--primary-color)", outline:"0.5rem solid var(--secondary-color)", border:"0.5rem solid var(--accent-color)", outlineOffset:"-1rem", color:"var(--secondary-color)", borderRadius:"2rem", color:"var(--accent-color)"}}>
                 <div className="row mx-auto mt-4 pt-4 px-5 pb-3">
-                    <div className="col-lg mt-5 my-auto">
+                    { browser.DPI == "MOBILE" || browser.DPI == "LDPI" ? 
+                        <div className="col-lg my-1">
+                            <img className="about-info w-75 p-2 my-4" src="https://avatars.githubusercontent.com/u/182053834?v=4" style={{borderRadius:"20rem", border:"0.15rem solid var(--accent-color)", backgroundColor:"var(--secondary-color)"}} alt="Github Profile Picture"/>
+                            <img className="about-info" src={`https://ghstats.dev/api/sparkline?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="Contribution Sparkline"/>
+                        </div>
+                    : null}
+                    <div className="col-lg my-1">
                         <img className="about-info" src={`https://ghstats.dev/api/card?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="GitHub Stats Card" />
                     </div>
-                    { browser.DPI != "MOBILE" ? 
-                        <div className="col-lg mt-5 my-auto">
+                    { browser.DPI != "MOBILE" && browser.DPI != "LDPI" ? 
+                        <div className="col-lg my-1">
                             <img className="about-info w-75 p-2 my-4" src="https://avatars.githubusercontent.com/u/182053834?v=4" style={{borderRadius:"20rem", border:"0.15rem solid var(--accent-color)", backgroundColor:"var(--secondary-color)"}} alt="Github Profile Picture"/>
                             <img className="about-info" src={`https://ghstats.dev/api/sparkline?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="Contribution Sparkline"/>
                         </div> 
                     : null}
-                    <div className="col-lg mt-5 p-2 my-auto">
+                    <div className="col-lg my-1">
                         <img className="about-info" src={`https://ghstats.dev/api/langs?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}&layout=donut_vertical`} alt="Top Languages" />
                     </div>
-                    { browser.DPI === "MOBILE" ? 
-                        <div className="col-lg mt-5 my-auto">
-                            <img className="about-info w-75 p-2 my-4" src="https://avatars.githubusercontent.com/u/182053834?v=4" style={{borderRadius:"20rem", border:"0.15rem solid var(--accent-color)", backgroundColor:"var(--secondary-color)"}} alt="Github Profile Picture"/>
-                            <img className="about-info" src={`https://ghstats.dev/api/sparkline?username=H4rsh-prog&bg=${colorHex.secondary}&title_color=${colorHex.accent}&icon_color=${colorHex.primary}&border_color=${colorHex.accent}`} alt="Contribution Sparkline"/>
-                            <div style={{height:"8rem"}} />
+                </div>
+                {browser.DPI != "MOBILE" && browser.DPI != "LDPI" ?
+                    <div className="row mx-auto" style={{width:"100%", position:"absolute", bottom:"0rem", right:"3rem" }}>
+                        <div className="col my-1">
+                            <p className="display-3 megrim-regular" ref={ref.header} style={{textAlign:"end", marginRight:"1rem"}}></p>
                         </div>
-                    : null}
-                </div>
-                <div className="row mx-auto" style={{width:"100%", position:"absolute", top:"1rem"}}>
-                    <div className="col my-1">
-                        <p className="display-3 megrim-regular" ref={ref.header} style={{textAlign:"end", marginRight:"1rem"}}></p>
                     </div>
-                </div>
+                :
+                    <div className="row mx-auto" style={{width:"100%", position:"absolute", top:"1rem"}}>
+                        <div className="col my-1">
+                            <p className="display-3 megrim-regular" ref={ref.header} style={{textAlign:"end", marginRight:"1rem"}}></p>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     );

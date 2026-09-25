@@ -46,15 +46,15 @@ export default function Projects() {
                     tweenLength: true
                 }, duration: 3.5, ease: "power4.out"}, "-=2.5")
                 .to(".header-description", {opacity: 1, duration: 1, ease: "power4.out"}, "-=2.5");
-            Array.from(document.getElementsByClassName("project_item")).forEach((project, index) => {
-                project.addEventListener("mouseenter", () => {
-                    gsap.to(project, {scale: 1.05, backgroundColor: "var(--secondary-color)", duration: 0.3, ease: "power4.out"});
+            if(browser.DPI != "MOBILE" && browser.DPI != "LDPI") {
+                Array.from(document.getElementsByClassName("project_item")).forEach((project) => {
+                    project.addEventListener("mouseenter", () => {
+                        gsap.to(project, {scale: 1.05, backgroundColor: "var(--secondary-color)", duration: 0.3, ease: "power4.out"});
+                    });
+                    project.addEventListener("mouseleave", () => {
+                        gsap.to(project, {scale: 1, backgroundColor: "var(--accent-color)", duration: 0.3, ease: "power4.out"});
+                    });
                 });
-                project.addEventListener("mouseleave", () => {
-                    gsap.to(project, {scale: 1, backgroundColor: "var(--accent-color)", duration: 0.3, ease: "power4.out"});
-                });
-            });
-            if(browser.DPI != "MOBILE") {
                 document.getElementById("project_details").addEventListener("mouseenter", () => {
                     gsap.to("#project_details", {scale: 0.95, duration: 0.3, ease: "power4.out"});
                 });
@@ -72,6 +72,7 @@ export default function Projects() {
         //HANDLING CARD CONTENT
         setCardFetch(async ()=>{
             await gsap.to("#project_details", {x:-100, opacity: 0, duration: 0.5, ease: "power4.out"})
+            if(expandedProject == null) return;
             await fetch(generateGithubCardURL(projects[expandedProject].repository)).then(()=>{document.getElementById("project_details").style.backgroundImage = `url(${generateGithubCardURL(projects[expandedProject].repository)})`})
             if(browser.DPI != "MOBILE" && browser.DPI != "LDPI") {
                 await fetch(generateGithubCardURLZoomed(projects[expandedProject].repository)).then(()=>{ref.zoomed_details.current.style.backgroundImage = `url(${generateGithubCardURLZoomed(projects[expandedProject].repository)})`})
@@ -122,7 +123,7 @@ export default function Projects() {
                             </a>
                         </div>
                         {pendingCardFetch?<div className="col w-100 h-100 me-2" style={{backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"center", backgroundImage:loading_gif}}/>:null}
-                        <div className="col w-100 h-100 me-2" ref={ref.zoomed_details} id="project_details_zoomed" style={{borderRadius:"2rem", opacity:pendingCardFetch?0:1, backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"center"}}/>
+                        <div className="col w-100 h-100 me-2" ref={ref.zoomed_details} id="project_details_zoomed" style={{borderRadius:"2rem", opacity:pendingCardFetch || expandedProject==null?0:1, backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"center"}}/>
                     </div>
                 :
                     <div className="row mx-auto" style={{overflow:"hidden", height:"70%", top:"8rem", position:"relative"}}>
@@ -130,14 +131,10 @@ export default function Projects() {
                             { expandedProject == null ?
                                 <div className="row g-2 my-2">
                                     {projects.map((project, index) => (
-                                    <div key={index} className="card mb-2 project_item"
+                                    <div className="card mb-2 project_item"
                                         onClick={
                                             ()=> {
-                                                if(expandedProject == index) {
-                                                    setExpandedProject(null);
-                                                } else {
-                                                    setExpandedProject(index);
-                                                }
+                                                setExpandedProject(index);
                                             }
                                         }>
                                         <div className="card-body" >
@@ -149,9 +146,14 @@ export default function Projects() {
                             : 
                                 <div className="col h-100" style={{position:"relative", top:"0.5rem"}}>
                                     <a target="_blank" href={`https://github.com/H4rsh-prog/${projects[expandedProject].repository}`}>
-                                        <div id="project_details" style={{width:"100%", height:"80%", transform:"scaleX(1.1)", backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"right"}}></div>
+                                        <div id="project_details" style={{width:"100%", height:"80%", transform:"scaleX(1.1)", backgroundSize:"contain", backgroundRepeat:"no-repeat", backgroundPosition:"center"}}></div>
                                     </a>
-                                    <div style={{backgroundColor:"var(--secondary-color)", border:"0.5rem solid var(--accent-color)", borderRadius:"2rem", color:"var(--accent-color)"}}>BACK</div>
+                                    <div className="mt-3" style={{backgroundColor:"var(--secondary-color)", border:"0.5rem solid var(--accent-color)", borderRadius:"2rem", color:"var(--accent-color)"}}
+                                        onClick={
+                                            ()=> {
+                                                setExpandedProject(null);
+                                            }
+                                        }>BACK</div>
                                 </div>
                             }
                             <div className="position-absolute h-25 bottom-0 start-0 ms-4" style={{background:"linear-gradient(transparent, var(--primary-color))", width:"100%", pointerEvents:"none"}}></div>
