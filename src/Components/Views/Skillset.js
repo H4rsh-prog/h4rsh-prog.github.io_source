@@ -30,7 +30,7 @@ const skillGroups = [
         ],
     },
     {
-        title: "Tech Stack (FullStack)",
+        title: "Tech Stack (FullStack) {Java+JavaScript/TypeScript+Kotlin}",
         skills: [
             "Spring Framework Ecosystem (Spring Boot, Spring Data JPA, Spring Security 6, Spring AI, Spring Cloud, Spring Web Services)",
             "Eureka",
@@ -47,6 +47,10 @@ const skillGroups = [
             "GSAP ; "+
             "JQuery"+
             " </FrontEnd>",
+
+            "<Android> "+
+            "Jetpack Compose"+
+            " </Android>"
         ],
     }, 
     {
