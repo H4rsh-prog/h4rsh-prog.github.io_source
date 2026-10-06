@@ -13,6 +13,10 @@ export var Project_List = [
         "cyberSAKura"
     ),
     new CLASS_PROJECT(
+        "Vectorify",
+        "vector-graphic-parser"
+    ),
+    new CLASS_PROJECT(
         "LZ77 Compression Service",
         "LZ_CompressionAlgo"
     ),
