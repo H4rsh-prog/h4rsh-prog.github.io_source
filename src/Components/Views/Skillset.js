@@ -30,23 +30,30 @@ const skillGroups = [
         ],
     },
     {
-        title: "Tech Stack (FullStack)",
+        title: "Tech Stack (FullStack) {Java+JavaScript/TypeScript+Kotlin}",
         skills: [
             "Spring Framework Ecosystem (Spring Boot, Spring Data JPA, Spring Security 6, Spring AI, Spring Cloud, Spring Web Services)",
-            "Eureka",
-            "RabbitMQ",
-            "KafkaMessageBroker",
-            "OpenCV",
-            "RestTemplates",
-            "OpenFeign",
-            "LangChain4J",
+            
+            "Libraries { "+
+            "Eureka Service Registry"+" ; "+
+            "RabbitMQ"+" ; "+
+            "KafkaMessageBroker"+" ; "+
+            "OpenCV"+" ; "+
+            "RestTemplates"+" ; "+
+            "OpenFeign"+" ; "+
+            "LangChain4J"+
+            " }",
 
             "<FrontEnd> "+
-            "React.JS ; "+
-            "Bootstrap 5 ; "+
-            "GSAP ; "+
-            "JQuery"+
+            "React.JS"+" ; "+
+            "Bootstrap 5"+" ; "+
+            "GSAP"+" ; "+
+            "JQuery"+" ; "+
             " </FrontEnd>",
+
+            "<Android> "+
+            "Jetpack Compose"+
+            " </Android>"
         ],
     }, 
     {
@@ -57,7 +64,10 @@ const skillGroups = [
             "Maven",
             "Gradle",
             "Github Copilot",
-            "JIRA"
+            "JIRA",
+            "AWS EC2",
+            "AWS RDS",
+            "AWS Secrets Manager"
         ]
     },
 ];
