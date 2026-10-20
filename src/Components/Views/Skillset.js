@@ -26,11 +26,10 @@ const skillGroups = [
             "SOLID",
             "REST",
             "Agile/SCRUM",
-            "DFD",
         ],
     },
     {
-        title: "Tech Stack (FullStack) {Java+JavaScript/TypeScript+Kotlin}",
+        title: "Tech Stack (FullStack) {Java+JavaScript+Kotlin}",
         skills: [
             "Spring Framework Ecosystem (Spring Boot, Spring Data JPA, Spring Security 6, Spring AI, Spring Cloud, Spring Web Services)",
             
